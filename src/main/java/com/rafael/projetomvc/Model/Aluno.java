@@ -12,7 +12,7 @@ public record Aluno (
 )
 
 {
-
-
-
+    public int getId() {
+        return 0;
+    }
 }

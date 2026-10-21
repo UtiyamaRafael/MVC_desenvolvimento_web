@@ -18,8 +18,15 @@ public class AlunoController {
         return "Aluno adicionado com sucesso!";
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<Aluno> getAllUsers() {
         return alunos;
     }
+
+    @DeleteMapping("/{id}")
+    public String excluirAluno(@PathVariable int id) {
+        alunos.removeIf(aluno -> aluno.getId() == id);
+        return "Aluno excluído com sucesso!";
+    }
+
 }
