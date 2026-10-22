@@ -15,8 +15,12 @@ public class AlunoController {
     //Add a user
     @PostMapping("/")
     public String addAluno(@RequestBody Aluno aluno) {
-        alunos.add(aluno);
-        return "Aluno adicionado com sucesso!";
+        if (validacaoCadastro(aluno)) {
+            alunos.add(aluno);
+            return "Aluno adicionado com sucesso!";
+        } else {
+            return "Erro ao adicionar aluno. Verifique os dados fornecidos.";
+        }
     }
 
     //Show all users
@@ -50,6 +54,27 @@ public class AlunoController {
         return alunos.removeIf(aluno -> aluno.id() == id)
                 ? "Aluno excluído com sucesso!"
                 : "Aluno não encontrado!";
+    }
+
+
+    public boolean validacaoCadastro(Aluno aluno) {
+        // Verifica se o nome do aluno não está vazio
+        if (aluno.nome() == null || aluno.nome().isEmpty()) {
+            return false;
+        }
+
+        // Verifica se o ID do aluno é positivo
+        if (aluno.id() <= 0) {
+            return false;
+        }
+
+        // Verifica se o curso do aluno não está vazio
+        if (aluno.curso() == null || aluno.curso().isEmpty()) {
+            return false;
+        }
+
+        // Se todas as validações passarem, retorna true
+        return true;
     }
 
 }
