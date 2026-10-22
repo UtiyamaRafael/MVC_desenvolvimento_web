@@ -1,5 +1,6 @@
 package com.rafael.projetomvc.Controller;
 
+import com.rafael.projetomvc.Service.AlunoService;
 import com.rafael.projetomvc.Model.Aluno;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,12 +11,19 @@ import java.util.List;
 @RequestMapping("/aluno")
 public class AlunoController {
 
+
+    private final AlunoService alunoService;
+
+    public AlunoController(AlunoService alunoService) {
+        this.alunoService = alunoService;
+    }
+
     private List<Aluno> alunos = new ArrayList<>();
 
     //Add a user
     @PostMapping("/")
     public String addAluno(@RequestBody Aluno aluno) {
-        if (validacaoCadastro(aluno)) {
+        if (alunoService.validacaoCadastro(aluno)) {
             alunos.add(aluno);
             return "Aluno adicionado com sucesso!";
         } else {
@@ -57,24 +65,5 @@ public class AlunoController {
     }
 
 
-    public boolean validacaoCadastro(Aluno aluno) {
-        // Verifica se o nome do aluno não está vazio
-        if (aluno.nome() == null || aluno.nome().isEmpty()) {
-            return false;
-        }
-
-        // Verifica se o ID do aluno é positivo
-        if (aluno.id() <= 0) {
-            return false;
-        }
-
-        // Verifica se o curso do aluno não está vazio
-        if (aluno.curso() == null || aluno.curso().isEmpty()) {
-            return false;
-        }
-
-        // Se todas as validações passarem, retorna true
-        return true;
-    }
 
 }
