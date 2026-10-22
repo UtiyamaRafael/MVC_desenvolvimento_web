@@ -10,9 +10,4 @@ public record Aluno (
     String curso
 
 )
-
-{
-    public int getId() {
-        return 0;
-    }
-}
+{}
